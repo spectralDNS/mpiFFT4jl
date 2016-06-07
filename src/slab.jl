@@ -1,4 +1,3 @@
-module slab
 using MPI
 
 export rfft3, irfft3, real_shape, complex_shape, SlabFFT
@@ -79,6 +78,4 @@ end
 
 function complex_shape{T<:Real}(F::SlabFFT{T})
     return (F.N[1]÷2+1, F.N[2]÷F.num_processes, F.N[3])
-end
-
 end
