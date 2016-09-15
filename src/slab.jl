@@ -1,7 +1,5 @@
-include("utils.jl")
-
 using MPI
-using utils
+using .utils
 
 # export rfft3, irfft3, real_shape, complex_shape, r2c
 export *
