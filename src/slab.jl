@@ -1,3 +1,5 @@
+include("utils.jl")
+
 using MPI
 using utils
 
