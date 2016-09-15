@@ -125,7 +125,7 @@ end
 function get_local_wavenumbermesh{T<:Real}(F::r2c{T})
     K = Array{Int}(tuple(push!([complex_shape(F)...], 3)...))
     k = complex_local_wavenumbers(F)
-    for (i, Ki) in enumerate(ndgrid(k[1], k[2], k[3])) K[sub(i)...] = Ki end
+    for (i, Ki) in enumerate(ndgrid(k[1], k[2], k[3])) K[view(i)...] = Ki end
     K
 end
 
@@ -135,7 +135,7 @@ function get_local_mesh{T<:Real}(F::r2c{T})
     y = collect(0:F.N[2]-1)*F.L[2]/F.N[2]
     z = collect(0:F.N[3]-1)*F.L[3]/F.N[3]
     X = Array{T}(tuple(push!([real_shape(F)...], 3)...))
-    for (i, Xi) in enumerate(ndgrid(x, y, z[F.rank*F.N[3]÷F.num_processes+1:(F.rank+1)*F.N[3]])) X[sub(i)...] = Xi end
+    for (i, Xi) in enumerate(ndgrid(x, y, z[F.rank*F.N[3]÷F.num_processes+1:(F.rank+1)*F.N[3]])) X[view(i)...] = Xi end
     X
 end    
 
