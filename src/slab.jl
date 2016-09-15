@@ -23,11 +23,11 @@ type r2c{T<:Real}
     plan3::FFTW.cFFTWPlan
     # Work arrays for transformations
     vT::Array{Complex{T}, 3}
-    vT_view::Array{Complex{T}, 4}
+    vT_sub::Array{Complex{T}, 4}
     v::Array{Complex{T}, 3}
-    v_view::Array{Complex{T}, 4}
+    v_sub::Array{Complex{T}, 4}
     v_recv::Array{Complex{T}, 3}
-    v_recv_view::Array{Complex{T}, 4}
+    v_recv_sub::Array{Complex{T}, 4}
     dealias::Array{Int, 1}
 
     # Constructor
@@ -125,7 +125,7 @@ end
 function get_local_wavenumbermesh{T<:Real}(F::r2c{T})
     K = Array{Int}(tuple(push!([complex_shape(F)...], 3)...))
     k = complex_local_wavenumbers(F)
-    for (i, Ki) in enumerate(ndgrid(k[1], k[2], k[3])) K[view(i)...] = Ki end
+    for (i, Ki) in enumerate(ndgrid(k[1], k[2], k[3])) K[sub(i)...] = Ki end
     K
 end
 
@@ -135,7 +135,7 @@ function get_local_mesh{T<:Real}(F::r2c{T})
     y = collect(0:F.N[2]-1)*F.L[2]/F.N[2]
     z = collect(0:F.N[3]-1)*F.L[3]/F.N[3]
     X = Array{T}(tuple(push!([real_shape(F)...], 3)...))
-    for (i, Xi) in enumerate(ndgrid(x, y, z[F.rank*F.N[3]÷F.num_processes+1:(F.rank+1)*F.N[3]])) X[view(i)...] = Xi end
+    for (i, Xi) in enumerate(ndgrid(x, y, z[F.rank*F.N[3]÷F.num_processes+1:(F.rank+1)*F.N[3]])) X[sub(i)...] = Xi end
     X
 end    
 
