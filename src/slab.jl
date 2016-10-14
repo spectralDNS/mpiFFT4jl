@@ -23,13 +23,13 @@ type r2c{T<:Real}
     plan3::FFTW.cFFTWPlan
     # Work arrays for transformations
     vT::Array{Complex{T}, 3}
-    vT_sub::Array{Complex{T}, 4}
+    vT_view::Array{Complex{T}, 4}
     v::Array{Complex{T}, 3}
-    v_sub::Array{Complex{T}, 4}
+    v_view::Array{Complex{T}, 4}
     v_recv::Array{Complex{T}, 3}
-    v_recv_sub::Array{Complex{T}, 4}
+    v_recv_view::Array{Complex{T}, 4}
     dealias::Array{Int, 1}
-
+    
     # Constructor
     function r2c(N, L, comm)
         # Verify input
