@@ -135,7 +135,7 @@ function get_local_mesh{T<:Real}(F::r2c{T})
     y = collect(0:F.N[2]-1)*F.L[2]/F.N[2]
     z = collect(0:F.N[3]-1)*F.L[3]/F.N[3]
     X = Array{T}(tuple(push!([real_shape(F)...], 3)...))
-    for (i, Xi) in enumerate(ndgrid(x, y, z[F.rank*F.N[3]÷F.num_processes+1:(F.rank+1)*F.N[3]])) X[view(i)...] = Xi end
+    for (i, Xi) in enumerate(ndgrid(x, y, z[F.rank*F.N[3]÷F.num_processes+1:(F.rank+1)*F.N[3]÷F.num_processes])) X[view(i)...] = Xi end
     X
 end    
 
