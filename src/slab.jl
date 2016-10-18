@@ -46,11 +46,11 @@ type r2c{T<:Real}
         # Plan Fourier transformations
         A = zeros(T, (N[1], N[2], Np[3]))
         if p > 1
-            plan12 = plan_rfft(A, (1, 2))
-            plan3 = plan_fft!(v, (3, ))
+            plan12 = plan_rfft(A, (1, 2), flags=FFTW.MEASURE)
+            plan3 = plan_fft!(v, (3, ), flags=FFTW.MEASURE)
         else  # Use only plan12 to do entire transform
-            plan12 = plan_rfft(A, (1, 2, 3))
-            plan3 = plan_fft!(zeros(Complex{Float64}, 2,2,2), (1, 2, 3))
+            plan12 = plan_rfft(A, (1, 2, 3), flags=FFTW.MEASURE)
+            plan3 = plan_fft!(zeros(Complex{Float64}, 2,2,2), (1, 2, 3), flags=FFTW.MEASURE)
         end
 
         # Compute the inverse plans
